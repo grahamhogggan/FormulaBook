@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "FormulaBook (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "FormulaBook (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
