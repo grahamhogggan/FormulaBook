@@ -12,6 +12,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="100"/>
             <RowDefinition Height="100"/>
+            <RowDefinition Height="100"/>
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
@@ -29,12 +30,23 @@
                  Grid.Column="1">
             
         </TextBox>
-        
+        <TextBlock
+            Grid.Row="1"
+            Grid.Column="1"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            TextWrapping="Wrap">
+            Basic Formulas involve only multiplication and division. <LineBreak/>
+            Rearrange the formula as necessary to get a product of some terms 
+            (and a constant if necessary) on each side of the equation. <LineBreak/>
+            Write Multiplication as A * B <LineBreak/>
+            An example is, for Ohm's Law: <Bold>V = I * R </Bold>
+        </TextBlock>
         <StackPanel Orientation="Horizontal"
                     HorizontalAlignment="Center"
-                    VerticalAlignment="Top"
+                    VerticalAlignment="Center"
                     Spacing="4"
-                    Grid.Row="1"
+                    Grid.Row="2"
                     Grid.Column="1">
             <Button Content="DoSomething"/>
 
