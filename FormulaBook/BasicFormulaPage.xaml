@@ -13,6 +13,8 @@
             <RowDefinition Height="100"/>
             <RowDefinition Height="100"/>
             <RowDefinition Height="100"/>
+                        <RowDefinition Height="100"/>
+
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
@@ -20,18 +22,29 @@
             <ColumnDefinition Width="800"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <TextBox x:Name="FormualEditor"
+        <TextBox x:Name="NameInput"
+         AcceptsReturn="True"
+         TextWrapping="NoWrap"
+         Header="Formula Name"
+         Width="300"
+         Height="60"
+         TextAlignment="Center"
+         Grid.Column="1">
+
+        </TextBox>
+        <TextBox x:Name="FormulaEditor"
                  AcceptsReturn="True"
                  TextWrapping="NoWrap"
                  Header="Formula Definition"
                  Width="800"
                  Height="60"
                  TextAlignment="Center"
+                 Grid.Row="1"
                  Grid.Column="1">
             
         </TextBox>
         <TextBlock
-            Grid.Row="1"
+            Grid.Row="2"
             Grid.Column="1"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
@@ -46,9 +59,13 @@
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     Spacing="4"
-                    Grid.Row="2"
+                    Grid.Row="3"
                     Grid.Column="1">
-            <Button Content="DoSomething"/>
+            <Button Content="Save" Click="SaveButton_Click"/>
+            <Button Content="Delete" Click="DeleteButton_Click"/>
+            <Button Content="Back" Click="BackButton_Click"/>
+
+
 
         </StackPanel>
     </Grid>

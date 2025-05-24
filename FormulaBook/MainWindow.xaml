@@ -19,6 +19,6 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Frame x:Name="rootFrame" Grid.Row="1" SourcePageType="local:BasicFormulaPage"/>
+        <Frame x:Name="rootFrame" Grid.Row="1" SourcePageType="local:FormulaBrowser"/>
     </Grid>
 </Window>

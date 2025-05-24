@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+
+    x:Class="FormulaBook.FormulaBrowser"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:FormulaBook"
+    xmlns:classes="using:FormulaBook.Classes"
+
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <DataTemplate x:Key="FormulaTemplate" 
+                  x:DataType="classes:BasicFormula">
+            <ItemContainer>
+                <Grid Background="LightGray">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="120"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="{x:Bind name}" Margin="4"
+                           TextWrapping="Wrap"
+                           TextTrimming="WordEllipsis"/>
+                    <TextBlock Text="{x:Bind formula}" Margin="4" Grid.Row="1"
+                     TextWrapping="Wrap"
+                        TextTrimming="WordEllipsis" VerticalAlignment="Top"/>
+                </Grid>
+            </ItemContainer>
+        </DataTemplate>
+    </Page.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <CommandBar DefaultLabelPosition="Right">
+            <AppBarButton Icon="Add" Label="New Formula" Click="NewFormulaButton_Click"/>
+            <CommandBar.Content>
+                <TextBlock Text="Quick notes" Margin="12,8" 
+               Style="{ThemeResource SubtitleTextBlockStyle}"/>
+            </CommandBar.Content>
+        </CommandBar>
+
+        <ItemsView ItemsSource="{x:Bind Formulas}" 
+            Grid.Row="1" Margin="24" 
+            ItemTemplate="{StaticResource FormulaTemplate}"
+            SelectionMode="None"
+            IsItemInvokedEnabled="True"
+            ItemInvoked="ClickOnFormula">
+            <ItemsView.Layout>
+                <UniformGridLayout MinItemWidth="200"
+                       MinColumnSpacing="20"
+                       MinRowSpacing="20"
+                       ItemsJustification="Start"/>
+            </ItemsView.Layout>
+        </ItemsView>
+    </Grid>
+    
+</Page>
