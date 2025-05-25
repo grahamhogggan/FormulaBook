@@ -28,10 +28,10 @@ namespace FormulaBook.Classes
         }
         public async Task SaveAsync()
         {
-            StorageFile saveFile = (StorageFile)await folder.TryGetItemAsync(name+".txt");
+            StorageFile saveFile = (StorageFile)await folder.TryGetItemAsync(name.Replace("/", "_") + ".txt");
             if (saveFile is null)
             {
-                saveFile = await folder.CreateFileAsync(name+".txt", CreationCollisionOption.ReplaceExisting);
+                saveFile = await folder.CreateFileAsync(name.Replace("/","_")+".txt", CreationCollisionOption.ReplaceExisting);
             }
             await FileIO.WriteTextAsync(saveFile, formula);
         }
@@ -95,6 +95,10 @@ namespace FormulaBook.Classes
             }
             return strings.ToArray();  
 
+        }
+        public bool ContainsElement(string element)
+        {
+            return GetElements().Contains(element);
         }
     }
 }

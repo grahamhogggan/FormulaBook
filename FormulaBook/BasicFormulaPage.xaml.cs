@@ -31,6 +31,7 @@ namespace FormulaBook
         private BasicFormula? formula;
         private StorageFolder folder=ApplicationData.Current.LocalFolder;
         private List<StackPanel> ElementEditors;
+        private CheckBox? currentlySolvingFor;
         public BasicFormulaPage()
         {
             InitializeComponent();
@@ -123,6 +124,7 @@ namespace FormulaBook
                         box.Padding = new Thickness(10);
                         box.MinWidth = 0;
                         box.HorizontalAlignment= HorizontalAlignment.Right;
+                        box.Checked += SolveToggleOn;
                         newPanel.Children.Add(box);
                         TextBlock block2 = new TextBlock();
                         block2.TextAlignment = TextAlignment.Center;
@@ -136,9 +138,25 @@ namespace FormulaBook
                         newPanel.Children.Add(tbox);
                    }
                 }
+                foreach(StackPanel row in ElementEditorStack.Children)
+                {
+                    if(row is not null)
+                    {
+                        if(!formula.ContainsElement(row.Name.Substring(15)))
+                        {
+                            ElementEditorStack.Children.Remove(row);
+                        }
+                    }
+                }
             }
 
         }
+
+        private void Box_Checked(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
         private bool EEContains(string element)
         {
             foreach (StackPanel panel in ElementEditors)
@@ -149,6 +167,19 @@ namespace FormulaBook
                 }
             }
             return false;
+        }
+        private void SolveToggleOn(object sender, RoutedEventArgs e)
+        {
+            if(currentlySolvingFor==null)
+            {
+                currentlySolvingFor = (CheckBox)sender;
+            }
+            else
+            {
+                currentlySolvingFor.IsChecked = false;
+                currentlySolvingFor = (CheckBox)sender;
+                currentlySolvingFor.IsChecked = true;
+            }
         }
     }
 }
