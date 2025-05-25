@@ -30,12 +30,14 @@ namespace FormulaBook
     {
         private BasicFormula? formula;
         private StorageFolder folder=ApplicationData.Current.LocalFolder;
+        private List<StackPanel> ElementEditors;
         public BasicFormulaPage()
         {
             InitializeComponent();
             formula = new BasicFormula("TestFormula");
             Loaded += LoadFormula;
             CompositionTarget.Rendering += CompositionTarget_Rendering;
+            ElementEditors = new List<StackPanel>();
         }
         private async void LoadFormula(object sender, RoutedEventArgs e)
         {
@@ -102,26 +104,51 @@ namespace FormulaBook
             if(formula is not null)
             {
                 ValidityRemark.Text = formula.ValidityRemark();
-                LeftElements.Children.Clear();
-                foreach(string element in formula.GetLeftElements())
+                foreach(string element in formula.GetElements())
                 {
-                    TextBox block = new TextBox();
-                    block.Name = "EDIT_"+element;
-                    block.Header = element;
-                    block.IsReadOnly = false;
-
-                    LeftElements.Children.Add(block);
-                }
-                RightElements.Children.Clear();
-                foreach (string element in formula.GetRightElements())
-                {
-                    TextBox block = new TextBox();
-                    block.Name = "EDIT_" + element;
-                    block.Header = element;
-                    block.IsReadOnly = false; RightElements.Children.Add(block);
+                   if(!EEContains(element))
+                   {
+                        StackPanel newPanel = new StackPanel();
+                        newPanel.Name = "Element_Editor_" + element;
+                        newPanel.Orientation= Orientation.Horizontal;
+                        ElementEditorStack.Children.Add(newPanel);
+                        ElementEditors.Add(newPanel);
+                        TextBlock block1 = new TextBlock();
+                        block1.TextAlignment = TextAlignment.Center;
+                        block1.HorizontalAlignment = HorizontalAlignment.Center;
+                        block1.Text = "Solve? ";
+                        block1.Padding = new Thickness(10);
+                        newPanel.Children.Add(block1);
+                        CheckBox box = new CheckBox();
+                        box.Padding = new Thickness(10);
+                        box.MinWidth = 0;
+                        box.HorizontalAlignment= HorizontalAlignment.Right;
+                        newPanel.Children.Add(box);
+                        TextBlock block2 = new TextBlock();
+                        block2.TextAlignment = TextAlignment.Center;
+                        block2.HorizontalAlignment = HorizontalAlignment.Center;
+                        block2.Text = element+" =   ";
+                        block2.Padding = new Thickness(10);
+                        newPanel.Children.Add(block2);
+                        TextBox tbox = new TextBox();
+                        tbox.Text = "0";
+                        tbox.Padding = new Thickness(10);
+                        newPanel.Children.Add(tbox);
+                   }
                 }
             }
 
+        }
+        private bool EEContains(string element)
+        {
+            foreach (StackPanel panel in ElementEditors)
+            {
+                if(panel.Name=="Element_Editor_"+element)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

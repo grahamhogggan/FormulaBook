@@ -75,6 +75,13 @@ namespace FormulaBook.Classes
             if (!isValid()) return new string[0];
             return RemoveDups(Compressed().Split("=")[1].Split("*"));
         }
+        public string[] GetElements()
+        {
+            string[] l = GetLeftElements();
+            string[] r = GetRightElements();
+            string[] joined = l.Concat(r).ToArray();
+            return RemoveDups(joined);
+        }
         string Compressed()
         {
             return formula.Replace(" ", "");

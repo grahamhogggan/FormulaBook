@@ -15,8 +15,6 @@
             <RowDefinition Height="100"/>
             <RowDefinition Height="100"/>
             <RowDefinition Height="400"/>
-
-
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
@@ -78,27 +76,13 @@
 
         </StackPanel>
         <StackPanel
-            Orientation="Horizontal"
+            Name="ElementEditorStack"
+            Orientation="Vertical"
             HorizontalAlignment="Center"
-            VerticalAlignment="Center"
-            Spacing="100"
+            VerticalAlignment="Top"
+            Spacing="25"
             Grid.Row="4"
             Grid.Column="1">
-            <StackPanel
-                Name="LeftElements"
-                Orientation="Vertical"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Spacing="4">
-
-            </StackPanel>
-            <StackPanel
-                Name="RightElements"
-                Orientation="Vertical"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Spacing="4">
-            </StackPanel>
         </StackPanel>
     </Grid>
 </Page>
