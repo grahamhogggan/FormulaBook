@@ -49,5 +49,45 @@ namespace FormulaBook.Classes
         {
             this.formula = formula;
         }
+        public string ValidityRemark()
+        {
+            string compressed = Compressed();
+            if (!compressed.Contains("=")) return "Invalid formula, must have an equals sign";
+            if (compressed.Contains("/")) return "Invalid formula, divison ust be removed by rearranging";
+
+            return "";
+        }
+        public bool isValid()
+        {
+            string compressed = Compressed();
+            if (!compressed.Contains("=")) return false;
+            if (compressed.Contains("/")) return true;
+
+            return true;
+        }
+        public string[] GetLeftElements()
+        {
+            if (!isValid()) return new string[0];
+            return RemoveDups(Compressed().Split("=")[0].Split("*"));
+        }
+        public string[] GetRightElements()
+        {
+            if (!isValid()) return new string[0];
+            return RemoveDups(Compressed().Split("=")[1].Split("*"));
+        }
+        string Compressed()
+        {
+            return formula.Replace(" ", "");
+        }
+        string[] RemoveDups(string[] input)
+        {
+            List<string> strings = new List<string>();
+            foreach(string str in input)
+            {
+                if(!strings.Contains(str)) strings.Add(str);
+            }
+            return strings.ToArray();  
+
+        }
     }
 }

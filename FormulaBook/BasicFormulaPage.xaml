@@ -13,7 +13,9 @@
             <RowDefinition Height="100"/>
             <RowDefinition Height="100"/>
             <RowDefinition Height="100"/>
-                        <RowDefinition Height="100"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="400"/>
+
 
         </Grid.RowDefinitions>
 
@@ -33,16 +35,23 @@
 
         </TextBox>
         <TextBox x:Name="FormulaEditor"
-                 AcceptsReturn="True"
                  TextWrapping="NoWrap"
                  Header="Formula Definition"
                  Width="800"
                  Height="60"
                  TextAlignment="Center"
                  Grid.Row="1"
-                 Grid.Column="1">
-            
+                 Grid.Column="1"
+                 AcceptsReturn="False">
         </TextBox>
+        <TextBlock
+            x:Name="ValidityRemark"
+            Grid.Row="1"
+            Grid.Column="2"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            TextWrapping="NoWrap">
+        </TextBlock>
         <TextBlock
             Grid.Row="2"
             Grid.Column="1"
@@ -67,6 +76,29 @@
 
 
 
+        </StackPanel>
+        <StackPanel
+            Orientation="Horizontal"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Spacing="100"
+            Grid.Row="4"
+            Grid.Column="1">
+            <StackPanel
+                Name="LeftElements"
+                Orientation="Vertical"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Spacing="4">
+
+            </StackPanel>
+            <StackPanel
+                Name="RightElements"
+                Orientation="Vertical"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Spacing="4">
+            </StackPanel>
         </StackPanel>
     </Grid>
 </Page>

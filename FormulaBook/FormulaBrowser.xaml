@@ -17,7 +17,7 @@
             <ItemContainer>
                 <Grid Background="LightGray">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="120"/>
+                        <RowDefinition Height="60"/>
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
                     <TextBlock Text="{x:Bind name}" Margin="4"

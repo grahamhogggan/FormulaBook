@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
+using Windows.System;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -34,6 +35,7 @@ namespace FormulaBook
             InitializeComponent();
             formula = new BasicFormula("TestFormula");
             Loaded += LoadFormula;
+            CompositionTarget.Rendering += CompositionTarget_Rendering;
         }
         private async void LoadFormula(object sender, RoutedEventArgs e)
         {
@@ -94,6 +96,32 @@ namespace FormulaBook
             {
                 Frame.GoBack();
             }
+        }
+        private void CompositionTarget_Rendering(object sender, object e)
+        {
+            if(formula is not null)
+            {
+                ValidityRemark.Text = formula.ValidityRemark();
+                LeftElements.Children.Clear();
+                foreach(string element in formula.GetLeftElements())
+                {
+                    TextBox block = new TextBox();
+                    block.Name = "EDIT_"+element;
+                    block.Header = element;
+                    block.IsReadOnly = false;
+
+                    LeftElements.Children.Add(block);
+                }
+                RightElements.Children.Clear();
+                foreach (string element in formula.GetRightElements())
+                {
+                    TextBox block = new TextBox();
+                    block.Name = "EDIT_" + element;
+                    block.Header = element;
+                    block.IsReadOnly = false; RightElements.Children.Add(block);
+                }
+            }
+
         }
     }
 }
