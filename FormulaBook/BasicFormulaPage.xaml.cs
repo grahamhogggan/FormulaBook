@@ -138,16 +138,35 @@ namespace FormulaBook
                         newPanel.Children.Add(tbox);
                    }
                 }
-                foreach(StackPanel row in ElementEditorStack.Children)
+                Dictionary<string, double> elementsDictionary = new Dictionary<string, double>();
+                foreach (StackPanel row in ElementEditorStack.Children)
                 {
                     if(row is not null)
                     {
-                        if(!formula.ContainsElement(row.Name.Substring(15)))
+                        string name = row.Name.Substring(15);
+                        if (!formula.ContainsElement(name))
                         {
                             ElementEditorStack.Children.Remove(row);
                         }
+                        if(!elementsDictionary.ContainsKey(name))
+                        {
+                            elementsDictionary.Add(name, GetTextBoxVal(row));
+                        }
+                        else
+                        {
+                            elementsDictionary[name] = GetTextBoxVal(row);
+                        }
                     }
                 }
+                if(currentlySolvingFor !=null && currentlySolvingFor.IsChecked== true)
+                {
+                    StackPanel solveRow = (StackPanel)currentlySolvingFor.Parent;
+                    TextBox solvebox = GetTextBox(solveRow);
+                    if(solvebox is not null)
+                    solvebox.Text = formula.Solve(elementsDictionary, solveRow.Name.Substring(15)).ToString();
+                }
+
+                
             }
 
         }
@@ -176,10 +195,39 @@ namespace FormulaBook
             }
             else
             {
-                currentlySolvingFor.IsChecked = false;
+                if(currentlySolvingFor!=(CheckBox)sender) currentlySolvingFor.IsChecked = false;
                 currentlySolvingFor = (CheckBox)sender;
-                currentlySolvingFor.IsChecked = true;
+                //currentlySolvingFor.IsChecked = true;
             }
         }
+        private double GetTextBoxVal(StackPanel row)
+        {
+            TextBox box = GetTextBox(row);
+            if(box!=null)
+            {
+                try
+                {
+                    return Double.Parse(box.Text);
+                }
+                catch
+                {
+                    return 0;
+                }
+            }
+            return -1;
+        }
+        private TextBox GetTextBox(StackPanel row)
+        {
+            if (row == null) return null;
+            foreach(UIElement element in row.Children)
+            {
+                if(element.GetType()==typeof(TextBox))
+                {
+                    return (TextBox)element;
+                }
+            }
+            return null;
+        }
+
     }
 }

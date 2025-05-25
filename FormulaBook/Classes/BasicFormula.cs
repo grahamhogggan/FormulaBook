@@ -100,5 +100,41 @@ namespace FormulaBook.Classes
         {
             return GetElements().Contains(element);
         }
+        public double Solve(Dictionary<String,double> elements,string ElementToSolveFor)
+        {
+            int countOfSolve = 0;
+            double RunningProduct = 1;
+            foreach(String element in Compressed().Split("=")[0].Split("*"))
+            {
+                if(element==ElementToSolveFor)
+                {
+                    countOfSolve++;
+                }
+                else
+                {
+                    if (elements[element] == 0) return 0;
+                    RunningProduct /= elements[element];
+                }
+            }
+            foreach (String element in Compressed().Split("=")[1].Split("*"))
+            {
+                if (element == ElementToSolveFor)
+                {
+                    countOfSolve--;
+                }
+                else
+                {
+                    RunningProduct *= elements[element];
+                }
+            }
+            if (countOfSolve == 0)
+            {
+                return 0;
+            }
+            else
+            {
+                return Math.Pow(RunningProduct, 1.0 / countOfSolve);
+            }
+        }
     }
 }
