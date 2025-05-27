@@ -7,7 +7,35 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
+    <Page.Resources>
+        <Style x:Key="InputTextBox" TargetType="TextBox">
+            <Setter Property="Background" Value="LightBlue"/>
+            <Setter Property="BorderBrush" Value="DarkBlue"/>
+            <Setter Property="Height" Value="60"/>
 
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border x:Name="BorderElement" Background="{TemplateBinding Background}">
+                            <ScrollViewer x:Name="ContentElement" />
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal" />
+                                    <VisualState x:Name="Focused">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="BorderElement" Storyboard.TargetProperty="Background">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="SkyBlue" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
     <Grid Padding="16" RowSpacing="8">
         <Grid.RowDefinitions>
             <RowDefinition Height="100"/>
@@ -27,20 +55,23 @@
          TextWrapping="NoWrap"
          Header="Formula Name"
          Width="300"
-         Height="60"
+         Height="30"
          TextAlignment="Center"
-         Grid.Column="1">
-
+         Grid.Column="1"
+         Style="{StaticResource InputTextBox}">
+            
         </TextBox>
         <TextBox x:Name="FormulaEditor"
                  TextWrapping="NoWrap"
                  Header="Formula Definition"
                  Width="800"
-                 Height="60"
+                 Height="30"
                  TextAlignment="Center"
                  Grid.Row="1"
                  Grid.Column="1"
-                 AcceptsReturn="False">
+                 AcceptsReturn="False"
+                 Style="{StaticResource InputTextBox}">
+
         </TextBox>
         <TextBlock
             x:Name="ValidityRemark"
@@ -68,9 +99,9 @@
                     Spacing="4"
                     Grid.Row="3"
                     Grid.Column="1">
-            <Button Content="Save" Click="SaveButton_Click"/>
-            <Button Content="Delete" Click="DeleteButton_Click"/>
-            <Button Content="Back" Click="BackButton_Click"/>
+            <Button Content="Save" Click="SaveButton_Click" Background="LightBlue"/>
+            <Button Content="Delete" Click="DeleteButton_Click" Background="LightBlue"/>
+            <Button Content="Back" Click="BackButton_Click" Background="LightBlue"/>
 
 
 

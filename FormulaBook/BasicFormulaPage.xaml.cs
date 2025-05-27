@@ -166,7 +166,7 @@ namespace FormulaBook
                     {
                         double result = formula.Solve(elementsDictionary, solveRow.Name.Substring(15));
                         string newText = result.ToString();
-                        if (result > 10000)
+                        if (result > 100000)
                         {
                             newText = ScientificNotate(result);
                         }

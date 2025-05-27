@@ -15,7 +15,7 @@
         <DataTemplate x:Key="FormulaTemplate" 
                   x:DataType="classes:BasicFormula">
             <ItemContainer>
-                <Grid Background="LightGray">
+                <Grid Background="LightBlue">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="60"/>
                         <RowDefinition Height="Auto"/>
@@ -40,7 +40,7 @@
         <CommandBar DefaultLabelPosition="Right">
             <AppBarButton Icon="Add" Label="New Formula" Click="NewFormulaButton_Click"/>
             <CommandBar.Content>
-                <TextBlock Text="Quick notes" Margin="12,8" 
+                <TextBlock Text="Formula Book" Margin="12,8" 
                Style="{ThemeResource SubtitleTextBlockStyle}"/>
             </CommandBar.Content>
         </CommandBar>
