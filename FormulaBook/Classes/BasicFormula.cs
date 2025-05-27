@@ -53,7 +53,7 @@ namespace FormulaBook.Classes
         {
             string compressed = Compressed();
             if (!compressed.Contains("=")) return "Invalid formula, must have an equals sign";
-            if (compressed.Contains("/")) return "Invalid formula, divison ust be removed by rearranging";
+            if (compressed.Contains("/")) return "Invalid formula, divison must be removed by rearranging";
 
             return "";
         }
