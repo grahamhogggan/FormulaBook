@@ -163,7 +163,16 @@ namespace FormulaBook
                     StackPanel solveRow = (StackPanel)currentlySolvingFor.Parent;
                     TextBox solvebox = GetTextBox(solveRow);
                     if(solvebox is not null)
-                    solvebox.Text = formula.Solve(elementsDictionary, solveRow.Name.Substring(15)).ToString();
+                    {
+                        double result = formula.Solve(elementsDictionary, solveRow.Name.Substring(15));
+                        string newText = result.ToString();
+                        if (result > 10000)
+                        {
+                            newText = ScientificNotate(result);
+                        }
+                        solvebox.Text = newText;
+                    }
+
                 }
 
                 
@@ -227,6 +236,12 @@ namespace FormulaBook
                 }
             }
             return null;
+        }
+        private string ScientificNotate(double val)
+        {
+            int exp = (int)Math.Log10(val);
+            double co = BasicFormula.Round3(val/Math.Pow(10,exp));
+            return co + "E" + exp;
         }
 
     }

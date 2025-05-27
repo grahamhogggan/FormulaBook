@@ -133,8 +133,12 @@ namespace FormulaBook.Classes
             }
             else
             {
-                return Math.Pow(RunningProduct, 1.0 / countOfSolve);
+                return Round3(Math.Pow(RunningProduct, 1.0 / countOfSolve));
             }
+        }
+        public static double Round3(double value)
+        {
+            return Math.Round(value * 1000) / 1000;
         }
     }
 }
