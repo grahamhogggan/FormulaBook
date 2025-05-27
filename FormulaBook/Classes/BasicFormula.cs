@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.VisualBasic;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,16 +30,16 @@ namespace FormulaBook.Classes
         }
         public async Task SaveAsync()
         {
-            StorageFile saveFile = (StorageFile)await folder.TryGetItemAsync(name.Replace("/", "_") + ".txt");
+            StorageFile saveFile = (StorageFile)await folder.TryGetItemAsync(CleanFilePath(name) + ".txt");
             if (saveFile is null)
             {
-                saveFile = await folder.CreateFileAsync(name.Replace("/","_")+".txt", CreationCollisionOption.ReplaceExisting);
+                saveFile = await folder.CreateFileAsync(CleanFilePath(name) + ".txt", CreationCollisionOption.ReplaceExisting);
             }
             await FileIO.WriteTextAsync(saveFile, formula);
         }
         public async Task DeleteAsync()
         {
-            StorageFile saveFile = (StorageFile)await folder.TryGetItemAsync(name + ".txt");
+            StorageFile saveFile = (StorageFile)await folder.TryGetItemAsync(CleanFilePath(name) + ".txt");
             if (saveFile is not null)
             {
                 await saveFile.DeleteAsync();
@@ -89,12 +91,18 @@ namespace FormulaBook.Classes
         string[] RemoveDups(string[] input)
         {
             List<string> strings = new List<string>();
-            foreach(string str in input)
+            foreach (string str in input)
             {
-                if(!strings.Contains(str)) strings.Add(str);
+                if (!strings.Contains(str))
+                {
+                    if (!double.TryParse(str, out _))
+                    {
+                        strings.Add(str);
+                    }
+                }
             }
-            return strings.ToArray();  
-
+                return strings.ToArray();  
+            
         }
         public bool ContainsElement(string element)
         {
@@ -112,8 +120,18 @@ namespace FormulaBook.Classes
                 }
                 else
                 {
-                    if (elements[element] == 0) return 0;
-                    RunningProduct /= elements[element];
+                    double constant;
+                    if (double.TryParse(element, out constant))
+                    {
+                        if (constant != 0)
+                        RunningProduct/=constant;
+                    }
+                    else
+                    {
+                        if (elements[element] == 0) return 0;
+                        RunningProduct /= elements[element];
+                    }
+
                 }
             }
             foreach (String element in Compressed().Split("=")[1].Split("*"))
@@ -124,7 +142,15 @@ namespace FormulaBook.Classes
                 }
                 else
                 {
-                    RunningProduct *= elements[element];
+                    double constant;
+                    if (double.TryParse(element, out constant))
+                    {
+                        RunningProduct *= constant;
+                    }
+                    else
+                    {
+                        RunningProduct *= elements[element];
+                    }
                 }
             }
             if (countOfSolve == 0)
@@ -139,6 +165,29 @@ namespace FormulaBook.Classes
         public static double Round3(double value)
         {
             return Math.Round(value * 1000) / 1000;
+        }
+        private static string CleanFilePath(string path)
+        {
+            path = path.Replace("/", "_");
+            path = path.Replace("\\", "_");
+            path = path.Replace("<", "_");
+            path = path.Replace(">", "_");
+            path = path.Replace("?", "_");
+
+            path = path.Replace("!", "-");
+            path = path.Replace("@", "-");
+            path = path.Replace("#", "-");
+            path = path.Replace("$", "-");
+            path = path.Replace("%", "-");
+            path = path.Replace("^", "-");
+            path = path.Replace("&", "-");
+            path = path.Replace("*", "-");
+            path = path.Replace("(", "-");
+            path = path.Replace(")", "-");
+
+
+            return path;
+
         }
     }
 }
