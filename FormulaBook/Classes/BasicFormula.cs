@@ -262,6 +262,7 @@ namespace FormulaBook.Classes
         }
         private double ComplexSolve(Dictionary<String, double> elements, string ElementToSolveFor)
         {
+            Debug.Print("->" + formula);
             string equation = Compressed();
             foreach(string element in GetElements())
             {
@@ -269,13 +270,12 @@ namespace FormulaBook.Classes
                 {
                     
                 }
-                else
+                else if(element != ElementToSolveFor)
                 {
                     equation = equation.Replace(element, elements[element].ToString());
                 }
             }
-            Equation e = new Equation(equation,ElementToSolveFor);
-            return e.Solve();
+            return Equation.SolveEquation(equation, ElementToSolveFor);
         }
     }
 }
