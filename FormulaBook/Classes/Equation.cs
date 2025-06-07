@@ -305,7 +305,7 @@ namespace FormulaBook.Classes
                     }
                 }
             }
-
+            if (leftEndpoint == rightEndpoint) return 0;
             Console.WriteLine("endpoints found: " + leftEndpoint + ", " + rightEndpoint);
             double res = leftEndpoint;
             for (int i = 0; i < 1000; i++)
